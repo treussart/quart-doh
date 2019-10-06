@@ -3,8 +3,8 @@ import argparse
 import dns.message
 import requests
 
-from constants import DOH_CONTENT_TYPE
-from utils import doh_b64_encode
+from quart_doh.constants import DOH_CONTENT_TYPE
+from quart_doh.utils import doh_b64_encode
 
 
 class ClientDOH:

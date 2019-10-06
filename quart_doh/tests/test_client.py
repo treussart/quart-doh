@@ -1,7 +1,7 @@
 import dns.message
 import pytest
 
-from client import ClientDOH
+from quart_doh.client import ClientDOH
 
 """
 List of servers taken from

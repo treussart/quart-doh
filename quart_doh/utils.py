@@ -10,7 +10,7 @@ from dns import message
 from dns.message import Message
 from quart import Response, Request
 
-from constants import (
+from quart_doh.constants import (
     AUTHORITY,
     DOH_CONTENT_TYPE,
     DOH_JSON_CONTENT_TYPE,

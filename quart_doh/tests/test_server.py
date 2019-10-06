@@ -2,9 +2,9 @@ import dns.message
 import pytest
 import requests
 
-from client import ClientDOH
-from constants import DOH_CONTENT_TYPE
-from utils import doh_b64_encode
+from quart_doh.client import ClientDOH
+from quart_doh.constants import DOH_CONTENT_TYPE
+from quart_doh.utils import doh_b64_encode
 
 known_servers = [
     # URL

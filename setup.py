@@ -36,7 +36,7 @@ setup(
         'Topic :: Utilities',
     ],
     keywords='doh dns https',
-    packages=['src'],
+    packages=['quart_doh'],
     install_requires=[
         'quart >= 0.10.0',
         'dnspython >= 1.16.0',
@@ -47,8 +47,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'doh-client = src.client:main',
-            'doh-server = src.server:main',
+            'doh-client = quart_doh.client:main',
+            'doh-server = quart_doh.server:main',
         ],
     },
 )

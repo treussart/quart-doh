@@ -6,9 +6,9 @@ from dns.message import Message
 from quart import Quart
 from quart import request, Response
 
-from constants import DOH_JSON_CONTENT_TYPE, DOH_CONTENT_TYPE
-from dns_resolver import DNSResolverClient
-from utils import (
+from quart_doh.constants import DOH_JSON_CONTENT_TYPE, DOH_CONTENT_TYPE
+from quart_doh.dns_resolver import DNSResolverClient
+from quart_doh.utils import (
     configure_logger,
     create_http_wire_response,
     get_name_and_type_from_dns_question,

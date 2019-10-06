@@ -16,4 +16,4 @@ dnspython = "*"
 python_version = "3.7"
 
 [scripts]
-doh_server = "python src/server.py --debug"
+doh_server = "bash ./start.sh"
