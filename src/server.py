@@ -15,8 +15,7 @@ from utils import (
     create_http_json_response,
 )
 
-resolver_dns = DNSResolverClient()
-
+resolver_dns = None
 app = Quart(__name__)
 
 
@@ -56,6 +55,11 @@ async def route_dns_query() -> Response:
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true", help="Enable Debug mode")
+    parser.add_argument(
+        "--resolver",
+        default="internal",
+        help="Define the DNS resolver. Default [%(default)s]",
+    )
     return parser.parse_args()
 
 
@@ -65,6 +69,8 @@ def main():
         level = "DEBUG"
     else:
         level = "INFO"
+    global resolver_dns
+    resolver_dns = DNSResolverClient(args.resolver)
     logger = configure_logger("doh-server", level=level)
     logger.info("Logger in {} mode".format(logging.getLevelName(logger.level)))
     app.run(
