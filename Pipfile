@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*"
+pytest = "*"
+
+[packages]
+requests = "*"
+quart = "*"
+dnspython = "*"
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+doh_server = "python src/server.py --debug"

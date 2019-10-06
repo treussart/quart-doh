@@ -1,0 +1,17 @@
+{
+  "Status": 0,
+  "Question": [
+    {
+      "name": "$name",
+      "type": "$type"
+    }
+  ],
+  "Answer": [
+    {
+      "name": "$name",
+      "type": "$type",
+      "TTL": $ttl,
+      "data": $data
+    }
+  ]
+}
