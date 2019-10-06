@@ -40,11 +40,17 @@ Firefox seems to only accept port 443.
 
 Then :
 
+Generate a certificate in the folder 'site-packages/quart_doh' :
+
+`openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes`
+
 `doh-server --debug`
 
 `doh-client --noverify`
 
 ### Via Docker
+
+`openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes`
 
 `docker build -f Dockerfile -t quart-doh/doh-server .`
 
