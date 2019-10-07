@@ -58,7 +58,23 @@ def parse_args():
     parser.add_argument(
         "--resolver",
         default="internal",
-        help="Define the DNS resolver. Default [%(default)s]",
+        help="Define the DNS resolver. Default [%(default)s]. Example 8.8.8.8",
+    )
+    parser.add_argument(
+        "--cert",
+        default="cert.pem",
+        help="Define the certificate path. Default [%(default)s]",
+    )
+    parser.add_argument(
+        "--key",
+        default="key.pem",
+        help="Define the path of the key. Default [%(default)s]",
+    )
+    parser.add_argument(
+        "--port", type=int, default=443, help="Define the port. Default [%(default)s]"
+    )
+    parser.add_argument(
+        "--host", default="0.0.0.0", help="Define the host. Default [%(default)s]"
     )
     return parser.parse_args()
 
@@ -74,10 +90,10 @@ def main():
     logger = configure_logger("doh-server", level=level)
     logger.info("Logger in {} mode".format(logging.getLevelName(logger.level)))
     app.run(
-        host="0.0.0.0",
-        port=443,
-        certfile="cert.pem",
-        keyfile="key.pem",
+        host=args.host,
+        port=args.port,
+        certfile=args.cert,
+        keyfile=args.key,
         debug=args.debug,
     )
 
