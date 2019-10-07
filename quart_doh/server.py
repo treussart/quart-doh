@@ -84,10 +84,12 @@ def main():
     if args.debug:
         level = "DEBUG"
     else:
-        level = "INFO"
+        level = "WARNING"
     global resolver_dns
     resolver_dns = DNSResolverClient(args.resolver)
     logger = configure_logger("doh-server", level=level)
+    configure_logger("quart.app", level=level)
+    configure_logger("quart.serving", level=level)
     logger.info("Logger in {} mode".format(logging.getLevelName(logger.level)))
     app.run(
         host=args.host,

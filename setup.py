@@ -10,12 +10,6 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-
-def read(*parts):
-    with open(path.join(here, *parts), 'r') as fp:
-        return fp.read()
-
-
 setup(
     name='quart-doh',
     version='0.0.2',
