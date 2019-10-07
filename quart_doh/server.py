@@ -1,4 +1,6 @@
 import argparse
+import asyncio
+import functools
 import logging
 
 import dns
@@ -27,7 +29,10 @@ async def route_dns_query() -> Response:
     if not message:
         return Response("", status=400)
     try:
-        query_response = await resolver_dns.resolve(message)
+        loop = asyncio.get_running_loop()
+        query_response = await loop.run_in_executor(
+            None, functools.partial(resolver_dns.resolve, message)
+        )
         if isinstance(query_response, Message):
             if query_response.answer:
                 logger.debug("[DNS] " + str(query_response.answer[0]))

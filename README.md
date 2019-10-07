@@ -66,29 +66,29 @@ Memory 8 GB 2133 MHz LPDDR3
 `apib -c 100 -d 60 @benchmark_get_url.txt`
 <pre>
 HTTP/1.1
-Duration:             60.037 seconds
-Attempted requests:   5036
-Successful requests:  5036
+Duration:             60.024 seconds
+Attempted requests:   15757
+Successful requests:  15757
 Non-200 results:      0
 Connections opened:   100
 Socket errors:        0
 
-Throughput:           83.882 requests/second
-Average latency:      1169.175 milliseconds
-Minimum latency:      687.415 milliseconds
-Maximum latency:      3717.255 milliseconds
-Latency std. dev:     305.909 milliseconds
-50% latency:          1101.480 milliseconds
-90% latency:          1139.522 milliseconds
-98% latency:          2028.349 milliseconds
-99% latency:          2606.700 milliseconds
+Throughput:           262.511 requests/second
+Average latency:      376.399 milliseconds
+Minimum latency:      103.082 milliseconds
+Maximum latency:      2846.580 milliseconds
+Latency std. dev:     456.340 milliseconds
+50% latency:          202.483 milliseconds
+90% latency:          862.423 milliseconds
+98% latency:          2044.469 milliseconds
+99% latency:          2409.697 milliseconds
 
 Client CPU average:    0%
 Client CPU max:        0%
 Client memory usage:    0%
 
-Total bytes sent:      0.71 megabytes
-Total bytes received:  1.58 megabytes
-Send bandwidth:        0.09 megabits / second
-Receive bandwidth:     0.21 megabits / second
+Total bytes sent:      2.25 megabytes
+Total bytes received:  5.08 megabytes
+Send bandwidth:        0.30 megabits / second
+Receive bandwidth:     0.68 megabits / second
 </pre>

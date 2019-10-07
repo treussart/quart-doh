@@ -6,7 +6,7 @@ class DNSResolverClient:
     def __init__(self, name_server: str = "internal"):
         self.name_server = name_server
 
-    async def resolve(self, message: Message) -> Message:
+    def resolve(self, message: Message) -> Message:
         maximum = 4
         timeout = 0.4
         response_message = 0
