@@ -38,3 +38,20 @@ class TestQuery:
         assert msg.rcode() == 0
         assert len(msg.answer) == 1
         assert "www.example.com. " in str(msg.answer[0])
+
+
+class TestMain:
+    def test_main(self):
+        from quart_doh.client import main
+        from collections import namedtuple
+
+        args = namedtuple(
+            "args", ["server", "get", "qname", "qtype", "dnssec", "noverify"]
+        )
+        args = args(
+            "https://dns.google/dns-query", False, "www.example.com", "A", False, False
+        )
+        with pytest.raises(SystemExit) as ret:
+            main(args)
+        assert ret.type == SystemExit
+        assert ret.value.code == 0

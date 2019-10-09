@@ -1,0 +1,10 @@
+[run]
+branch = true
+source =
+    quart_doh
+omit =
+    **/tests/*
+
+[report]
+omit =
+    **/tests/*

@@ -70,7 +70,6 @@ def set_headers(
     ttl = 0
     if query_response.answer:
         ttl = min(r.ttl for r in query_response.answer)
-    if query_response.answer:
         response.headers["cache-control"] = "max-age=" + str(ttl)
     return response
 
@@ -136,7 +135,7 @@ async def create_http_json_response(
     if isinstance(query_response, Message):
         if query_response.answer:
             answers = []
-            for answer in query_response.answer[0]:
+            for answer in query_response.answer:
                 answers.append(str(answer))
             with open(dir_path + "/template.json", "r", encoding="UTF-8") as template:
                 s = Template(template.read())

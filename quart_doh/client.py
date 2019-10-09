@@ -32,7 +32,7 @@ class ClientDOH:
             return r.content
 
 
-def parse_args():
+def parse_args():  # pragma: no cover
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--server",
@@ -61,15 +61,16 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
-    args = parse_args()
+def main(args):
     client_doh = ClientDOH(args.server, args.noverify)
     response_body = client_doh.make_request(
         qname=args.qname, rdtype=args.qtype, get=args.get, dnssec=args.dnssec
     )
     msg = dns.message.from_wire(response_body)
     print(msg.to_text())
+    exit(0)
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__":  # pragma: no cover
+    args = parse_args()
+    main(args)

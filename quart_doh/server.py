@@ -39,7 +39,7 @@ async def route_dns_query() -> Response:
             else:
                 logger.debug("[DNS] " + str(query_response.question[0]))
         else:
-            logger.debug("[DNS] " + str(query_response))
+            logger.debug("[DNS] " + "Timeout on " + resolver_dns.name_server)
             query_response = dns.message.make_response(message)
             query_response.set_rcode(dns.rcode.SERVFAIL)
     except Exception as ex:
@@ -57,7 +57,7 @@ async def route_dns_query() -> Response:
             return Response("", status=405)
 
 
-def parse_args():
+def parse_args():  # pragma: no cover
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true", help="Enable Debug mode")
     parser.add_argument(
@@ -84,8 +84,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
-    args = parse_args()
+def main(args):  # pragma: no cover
     if args.debug:
         level = "DEBUG"
     else:
@@ -105,5 +104,6 @@ def main():
     )
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__":  # pragma: no cover
+    args = parse_args()
+    main(args)
