@@ -67,7 +67,6 @@ def set_headers(
     response.headers["authority"] = AUTHORITY
     response.headers["method"] = request.method
     response.headers["scheme"] = get_scheme(request)
-    ttl = 0
     if query_response.answer:
         ttl = min(r.ttl for r in query_response.answer)
         response.headers["cache-control"] = "max-age=" + str(ttl)

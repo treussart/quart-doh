@@ -39,7 +39,7 @@ async def route_dns_query() -> Response:
             else:
                 logger.debug("[DNS] " + str(query_response.question[0]))
         else:
-            logger.debug("[DNS] " + "Timeout on " + resolver_dns.name_server)
+            logger.debug("[DNS] Timeout on " + resolver_dns.name_server)
             query_response = dns.message.make_response(message)
             query_response.set_rcode(dns.rcode.SERVFAIL)
     except Exception as ex:
