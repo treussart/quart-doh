@@ -2,9 +2,12 @@ import argparse
 import asyncio
 import functools
 import logging
+import ssl
 
 import dns
 from dns.message import Message
+from hypercorn.asyncio import serve
+from hypercorn.config import Config
 from quart import Quart
 from quart import request, Response
 
@@ -30,9 +33,13 @@ async def route_dns_query() -> Response:
         return Response("", status=400)
     try:
         loop = asyncio.get_running_loop()
-        query_response = await loop.run_in_executor(
-            None, functools.partial(resolver_dns.resolve, message)
-        )
+        query_response = None
+        try:
+            query_response = await loop.run_in_executor(
+                None, functools.partial(resolver_dns.resolve, message)
+            )
+        except asyncio.CancelledError:
+            pass
         if isinstance(query_response, Message):
             if query_response.answer:
                 logger.debug("[DNS] " + str(query_response.answer[0]))
@@ -78,6 +85,14 @@ def parse_args():  # pragma: no cover
     return parser.parse_args()
 
 
+def _exception_handler(loop: asyncio.AbstractEventLoop, context: dict) -> None:
+    exception = context.get("exception")
+    if isinstance(exception, ssl.SSLError):
+        pass  # Handshake failure
+    else:
+        loop.default_exception_handler(context)
+
+
 def main(args):  # pragma: no cover
     if args.debug:
         level = "DEBUG"
@@ -89,13 +104,19 @@ def main(args):  # pragma: no cover
     configure_logger("quart.app", level=level)
     configure_logger("quart.serving", level=level)
     logger.info("Logger in {} mode".format(logging.getLevelName(logger.level)))
-    app.run(
-        host=args.host,
-        port=args.port,
-        certfile=args.cert,
-        keyfile=args.key,
-        debug=args.debug,
-    )
+
+    config = Config()
+    config.bind = [args.host + ":" + str(args.port)]
+    config.ca_certs = args.cert
+    config.certfile = args.cert
+    config.keyfile = args.key
+    config.debug = args.debug
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.set_debug(args.debug)
+    loop.set_exception_handler(_exception_handler)
+    loop.run_until_complete(serve(app, config))
 
 
 if __name__ == "__main__":  # pragma: no cover
