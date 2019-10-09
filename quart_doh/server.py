@@ -8,7 +8,7 @@ from dns.message import Message
 from quart import Quart
 from quart import request, Response
 
-from quart_doh.constants import DOH_JSON_CONTENT_TYPE, DOH_CONTENT_TYPE
+from quart_doh.constants import DOH_JSON_CONTENT_TYPE
 from quart_doh.dns_resolver import DNSResolverClient
 from quart_doh.utils import (
     configure_logger,
@@ -39,22 +39,16 @@ async def route_dns_query() -> Response:
             else:
                 logger.debug("[DNS] " + str(query_response.question[0]))
         else:
-            logger.debug("[DNS] Timeout on " + resolver_dns.name_server)
+            logger.warning("[DNS] Timeout on " + resolver_dns.name_server)
             query_response = dns.message.make_response(message)
             query_response.set_rcode(dns.rcode.SERVFAIL)
     except Exception as ex:
         logger.exception(str(ex))
         return Response("", status=400)
-    if request.method == "GET":
-        if accept_header == DOH_JSON_CONTENT_TYPE:
-            return await create_http_json_response(request, query_response)
-        else:
-            return await create_http_wire_response(request, query_response)
-    elif request.method == "POST":
-        if request.headers.get("content-type") == DOH_CONTENT_TYPE:
-            return await create_http_wire_response(request, query_response)
-        else:
-            return Response("", status=405)
+    if request.method == "GET" and accept_header == DOH_JSON_CONTENT_TYPE:
+        return await create_http_json_response(request, query_response)
+    else:
+        return await create_http_wire_response(request, query_response)
 
 
 def parse_args():  # pragma: no cover
